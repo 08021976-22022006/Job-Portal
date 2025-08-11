@@ -5,78 +5,85 @@ import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const isAuthenticated = true;
-    const user = { fullname: "Alex", role: "employer" };
+    const user = { fullName: "Alex", role: "employer" };
     const navigate = useNavigate();
 
-    return (
-        <Header>
-            <div className="">
-                <div className=''>
-                    {/* Logo */}
-                    <div className=''>
-                        <div className=''>
-                            <Briefcase className='' />
-                        </div>
-                        <span className=''>Job portal</span>
+return (
+    <motion.header
+        initial = {{ opacity: 0, y: -20 }}
+        animate = {{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 "
+    >
+        <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between h-16">
+                {/* Logo */}
+                <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                        <Briefcase className="w-5 h-5 text-white" />
                     </div>
-                    {/* Navigate Links hidden on links */}
-                    <nav className="">
-                        <a
-                            onClick={() => navigate("find-jobs")}
-                            className=''
-                        >
-                            Find Jobs
-                        </a>
-                        <a
-                            onClick={() => {
-                                navigate(
-                                    isAuthenticated && user?.role == "employer"
-                                        ? "/employer/dashboard"
-                                        : "login"
-                                );
-                            }}
-                            className=""
-                        >
-                            For Employers
-                        </a>
-                    </nav>
-                    {/* Auth Buttons */}
-                    <div className="">
-                        {isAuthenticated ? (
-                            <div className="">
-                                <span className="">Welcome, {user?.fullName}</span>
-                                <a
-                                    href={
-                                        user?.role === "employer"
+                    <span className="text-xl font-bold text-gray-900">Job portal</span>
+                </div>
+
+                {/* Navigation Links */}
+                <nav className="hidden md:flex items-center space-x-8">
+                    <a
+                        onClick={() => navigate("find-jobs")}
+                        className="text-gray-600 hover:text-gray-900 transition-colors font-medium cursor-pointer"
+                    >
+                        Find Jobs
+                    </a>
+                    <a
+                        onClick={() => {
+                            navigate(
+                                isAuthenticated && user?.role === "employer"
+                                    ? "/employer-dashboard"
+                                    : "login"
+                            );
+                        }}
+                        className="text-gray-600 hover:text-gray-900 transition-colors font-medium cursor-pointer"
+                    >
+                        For Employers
+                    </a>
+                </nav>
+
+                {/* Auth Buttons */}
+                <div className="flex items-center space-x-3">
+                    {isAuthenticated ? (
+                        <div className="flex items-center space-x-3">
+                            <span className="text-gray-700">Welcome,{user?.fullName}</span>
+                            <a
+                                href={
+                                    user?.role === "employer"
                                         ? "/employer-dashboard"
                                         : "/find-jobs"
-                                    }
-                                    className=""
-                                >
-                                    Dashboard
-                                </a>
-                            </div>
-                            ) : (
-                               <>
-                                    <a
-                                        href="/login"
-                                        className=""
-                                    >
-                                        Login
-                                    </a>
-                                    <a
-                                        href="/signup"
-                                        className=""
-                                    >
-                                        Sign Up
-                                    </a>
-                               </>
-                            )}
-                    </div>
+                                }
+                                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-sm hover:shadow-md"
+                            >
+                                Dashboard
+                            </a>
+                        </div>
+                    ) : (
+                        <>
+                            <a
+                                href="/login"
+                                className="text-gray-600 hover:text-gray-900 transition-colors font-medium px-4 py-2 rounded-lg hover:bg-gray-50"
+                            >
+                                Login
+                            </a>
+                            <a
+                                href="/signup"
+                                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-sm hover:shadow-md"
+                            >
+                                Sign Up
+                            </a>
+                        </>
+                    )}
                 </div>
             </div>
-        </Header>
-    );
+        </div>
+    </motion.header>
+);
 }
 
 export default Header;
