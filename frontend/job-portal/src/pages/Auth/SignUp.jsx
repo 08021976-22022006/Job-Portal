@@ -13,7 +13,7 @@ import {
   Loader
 } from "lucide-react"
 import { useState } from "react";
-import { validateEmail } from "../../utils/helper";
+import { validateAvatar, validateEmail, validatePassword } from "../../utils/helper";
 
 const SignUp = () => {
 
@@ -99,7 +99,7 @@ const SignUp = () => {
     const errors = {
       fullName: !formData.fullName ? "Full Name is required" : "",
       email: validateEmail(formData.email),
-      passowrd: validatePassword(formData.password),
+      password: validatePassword(formData.password),
       role: !formData.role? "Please Select A Role" : "",
       avatar: ""
     };
@@ -122,7 +122,17 @@ const SignUp = () => {
 
     }
     catch (error) {
-      
+      console.log("error", error);
+
+      setFormState((prev)=>({
+        ...prev,
+        loading: false,
+        errors: {
+          submit:
+            error.response?.data?.message || 
+            "Registration Failed! Please Try Again Later",
+        }
+      }));
     }
   };
 
